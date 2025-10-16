@@ -38,6 +38,7 @@ class Generator
         
         
         var gns = "global::NImpeller";
+        gen.Line("using System;");
         gen.Line("#nullable enable");
         using (gen.Line("namespace NImpeller").Scope())
         {

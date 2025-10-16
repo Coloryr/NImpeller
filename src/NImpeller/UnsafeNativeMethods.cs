@@ -1,3 +1,5 @@
+using System;
+
 namespace NImpeller;
 
 static partial class UnsafeNativeMethods
