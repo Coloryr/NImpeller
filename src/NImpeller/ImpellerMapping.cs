@@ -1,3 +1,5 @@
+using System;
+
 namespace NImpeller;
 
 internal partial struct ImpellerMapping
