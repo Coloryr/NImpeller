@@ -60,7 +60,7 @@ static unsafe  class Program
             }
         }
 
-        var windowFlags = WindowFlags.Shown;
+        var windowFlags = WindowFlags.Shown | WindowFlags.Resizable;
         if(apiType == GraphicsApi.OpenGL)
             windowFlags |= WindowFlags.Opengl;
         else if (apiType == GraphicsApi.Vulkan) 
@@ -138,7 +138,7 @@ static unsafe  class Program
         
         bool running = true;
 
-        var scene = new MMarkScene();
+        var scene = new ParagraphScene();
         
         var st = Stopwatch.StartNew();
         var frames = 0;
