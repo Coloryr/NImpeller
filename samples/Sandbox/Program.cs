@@ -23,19 +23,6 @@ static unsafe  class Program
     
     static void Main(string[] args)
     {
-        var impellerPath = Path.Combine(Directory.GetCurrentDirectory(), args[0]);
-        if (!File.Exists(impellerPath))
-        {
-            Console.WriteLine($"File not found: {impellerPath}");
-            return;
-        }
-
-        NativeLibrary.SetDllImportResolver(typeof(ImpellerContext).Assembly, (name, assembly, path) =>
-        {
-            if (name == "impeller")
-                return NativeLibrary.Load(impellerPath);
-            return IntPtr.Zero;
-        });
         var sdl = Sdl.GetApi();
 
         if (sdl.Init(Sdl.InitVideo) < 0)
