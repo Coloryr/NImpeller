@@ -1,5 +1,9 @@
 # Impeller .NET bindings
 
+The general approach for NImpeller is to treat impeller.h as the only source of truth and manually write only some convenience code or code dealing with native->managed callbacks (there is only a few of those). The generator is supposed to generate the entire P/Invoke layer and at least 90% of .NET classes exposed as the public API.
+
+Generated bindings file is NOT checked out into the repo, because right now the bindings considered to be versionless, i. e. being compatible with any version of impeller.h. You can find an example of generated code [here](https://gist.github.com/kekekeks/cc8b7dfbf2dae07e55ca9d4ee6a8e2d6) if you don't want to clone/build the repo and want a sneak peek.
+
 ### Running this thing
 
 1) Run InteropGen with /path/to/impeller.h as an argument and pray that ClangSharp is not completely broken for you
