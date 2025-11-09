@@ -6,8 +6,17 @@ Generated bindings file is NOT checked out into the repo, because right now the 
 
 ### Running this thing
 
-1) Run InteropGen with /path/to/impeller.h as an argument and pray that ClangSharp is not completely broken for you
-2) Run Sandbox with /path/to/impeller.so (or dll/dylib) as an argument. It will only work for platforms where SDL2 can create a GLES context. I've only tested it with Linux with an Intel iGPU, so good luck.
+1) Generate the Impeller bindings. If you have never generated the bindings, they will be generated on first build of NImpeller via an MSBuild task. You should see this as `DownloadSdkAndGenerateBindings`. You can also use the InteropGen program directly with the `impeller.h` header, or use the Nuke task
+
+```sh
+./build.sh GenerateBindings
+```
+
+to automatically download and build the bindings.
+
+2) Run the Sandbox sample. The runtime file used is based on the `Impeller.targets` file. You can either manually set up the library you want to test with, or use the Nuke tasks below for automatically setting it up per commit, or with the latest commit. 
+
+It will only work for platforms where SDL2 can create a GLES context. I've only tested it with Linux with an Intel iGPU, so good luck.
 
 ### Using pre-build Impeller binaries
 
@@ -21,6 +30,20 @@ Where:
 From this zip you will need `include/impeller.h` and `lib/impeller.so` (or `impeller.dll`/`impeller.dylib`).
 
 See [Impeller Toolkit: Prebuilt Artifacts](https://github.com/flutter/flutter/blame/908eab56e04a0925fc3c1a7d4bff1f4ae6351ae3/engine/src/flutter/impeller/toolkit/interop/README.md#L22)
+
+The files can be automatically downloaded via [Nuke](https://nuke.build/docs/getting-started/installation/) using the Powershell, Bash, or global Nuke command. Using either:
+
+```sh
+./build.sh DownloadLatestImpeller --All
+```
+
+to download the newest Impeller build by the newest commit to Flutter, or
+
+```sh
+./build.sh DownloadImpeller --impeller-sha (Commit Sha) --All
+```
+
+For a specific commit.
 
 ### Handles
 
