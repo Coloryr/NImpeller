@@ -1,0 +1,54 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Default",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/samples/Sandbox/bin/Debug/net8.0/Sandbox.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/samples/Sandbox/bin/Debug/net8.0/",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Paragraph",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/samples/Sandbox/bin/Debug/net8.0/Sandbox.dll",
+            "args": [ "paragraph" ],
+            "cwd": "${workspaceFolder}/samples/Sandbox/bin/Debug/net8.0/",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "MMark",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/samples/Sandbox/bin/Debug/net8.0/Sandbox.dll",
+            "args": [ "mmark" ],
+            "cwd": "${workspaceFolder}/samples/Sandbox/bin/Debug/net8.0/",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Circling Squares",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/samples/Sandbox/bin/Debug/net8.0/Sandbox.dll",
+            "args": [ "circlingsquares" ],
+            "cwd": "${workspaceFolder}/samples/Sandbox/bin/Debug/net8.0/",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
+        }
+    ]
+}

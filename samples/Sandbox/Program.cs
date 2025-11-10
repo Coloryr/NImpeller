@@ -19,6 +19,12 @@ static unsafe  class Program
         DontTellMeThatThisIsUnreachable
     }
     
+    enum Scenes
+    {
+        MMark,
+        Paragraph,
+        CirclingSquares
+    }
     
     
     static void Main(string[] args)
@@ -60,7 +66,7 @@ static unsafe  class Program
             }
         }
 
-        var windowFlags = WindowFlags.Shown;
+        var windowFlags = WindowFlags.Shown | WindowFlags.Resizable;
         if(apiType == GraphicsApi.OpenGL)
             windowFlags |= WindowFlags.Opengl;
         else if (apiType == GraphicsApi.Vulkan) 
@@ -138,8 +144,20 @@ static unsafe  class Program
         
         bool running = true;
 
-        var scene = new MMarkScene();
-        
+        Scenes sceneType = Scenes.MMark;
+        if (args.Length > 0)
+        {
+            Enum.TryParse<Scenes>(args[0], true, out sceneType);
+        }
+
+        IScene scene = sceneType switch
+        {
+            Scenes.MMark => new MMarkScene(),
+            Scenes.Paragraph => new ParagraphScene(),
+            Scenes.CirclingSquares => new CirclingSquares(),
+            _ => new MMarkScene()
+        };
+
         var st = Stopwatch.StartNew();
         var frames = 0;
         var fps = 0;
