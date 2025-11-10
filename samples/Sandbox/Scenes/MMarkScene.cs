@@ -6,6 +6,9 @@ namespace Sandbox.Scenes;
 
 public class MMarkScene : IScene
 {
+    public string Name => "MMark";
+    public string Description => "Vector graphics benchmark rendering random paths with lines, quads, and cubic curves";
+
     private const int Width = 1600;
     private const int Height = 900;
     private const int GridWidth = 80;

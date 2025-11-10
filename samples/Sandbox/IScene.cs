@@ -11,5 +11,7 @@ public class SceneParameters
 
 public interface IScene
 {
+    string Name { get; }
+    string Description { get; }
     void Render(ImpellerContext context, ImpellerDisplayListBuilder scene, SceneParameters sceneParameters);
 }

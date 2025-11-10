@@ -2,17 +2,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Default",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/samples/Sandbox/bin/Debug/net8.0/Sandbox.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/samples/Sandbox/bin/Debug/net8.0/",
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
             "name": "Paragraph",
             "type": "coreclr",
             "request": "launch",
@@ -40,7 +29,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/samples/Sandbox/bin/Debug/net8.0/Sandbox.dll",
-            "args": [ "circlingsquares" ],
+            "args": [ "'Circling Squares'" ],
             "cwd": "${workspaceFolder}/samples/Sandbox/bin/Debug/net8.0/",
             "console": "internalConsole",
             "stopAtEntry": false

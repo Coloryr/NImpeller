@@ -6,6 +6,9 @@ namespace Sandbox.Scenes;
 
 public class CirclingSquares : IScene
 {
+    public string Name => "Circling Squares";
+    public string Description => "Animated red squares rotating around the center";
+
     Stopwatch st = Stopwatch.StartNew();
     public void Render(ImpellerContext context, ImpellerDisplayListBuilder scene, SceneParameters sceneParameters)
     {

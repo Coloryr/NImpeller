@@ -18,17 +18,102 @@ static unsafe  class Program
         Vulkan,
         DontTellMeThatThisIsUnreachable
     }
-    
-    enum Scenes
+
+    static IScene[] GetAvailableScenes()
     {
-        MMark,
-        Paragraph,
-        CirclingSquares
+        return new IScene[]
+        {
+            new MMarkScene(),
+            new ParagraphScene(),
+            new CirclingSquares()
+        };
     }
-    
-    
+
+    static void DisplayHelp()
+    {
+        Console.WriteLine("NImpeller Sandbox\n");
+        Console.WriteLine("Usage: SandBox [scene-name] [graphics-api]\n");
+        Console.WriteLine("Available scenes:");
+
+        var scenes = GetAvailableScenes();
+        foreach (var scene in scenes)
+        {
+            Console.WriteLine($"\n  {scene.Name}");
+            Console.WriteLine($"    {scene.Description}");
+        }
+
+        Console.WriteLine("\nGraphics APIs: opengl, vulkan");
+        Console.WriteLine("\nExamples:");
+        Console.WriteLine("  Sandbox                    - Launches scene selection");
+        Console.WriteLine("  Sandbox MMark              - Runs MMark scene");
+        Console.WriteLine("  Sandbox Paragraph vulkan   - Runs Paragraph scene with Vulkan");
+        Console.WriteLine("  Sandbox --help             - Shows this help message");
+    }
+
+    static IScene SelectScene()
+    {
+        var scenes = GetAvailableScenes();
+
+        int selectedIndex = 0;
+        ConsoleKey key;
+
+        Console.CursorVisible = false;
+
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("Select a scene, press Enter to confirm:\n");
+
+            for (int i = 0; i < scenes.Length; i++)
+            {
+                if (i == selectedIndex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine($"> {scenes[i].Name}");
+                    Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine($"  {scenes[i].Description}");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.WriteLine($"  {scenes[i].Name}");
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine($"  {scenes[i].Description}");
+                    Console.ResetColor();
+                }
+                Console.WriteLine();
+            }
+
+            key = Console.ReadKey(true).Key;
+
+            if (key == ConsoleKey.UpArrow)
+            {
+                selectedIndex = (selectedIndex - 1 + scenes.Length) % scenes.Length;
+            }
+            else if (key == ConsoleKey.DownArrow)
+            {
+                selectedIndex = (selectedIndex + 1) % scenes.Length;
+            }
+
+        } while (key != ConsoleKey.Enter);
+
+        Console.CursorVisible = true;
+        Console.Clear();
+
+        return scenes[selectedIndex];
+    }
+
+
     static void Main(string[] args)
     {
+        // Check for help command
+        if (args.Length > 0 && (args[0] == "--help" || args[0] == "-h" || args[0] == "help"))
+        {
+            DisplayHelp();
+            return;
+        }
+
         var sdl = Sdl.GetApi();
 
         if (sdl.Init(Sdl.InitVideo) < 0)
@@ -144,19 +229,34 @@ static unsafe  class Program
         
         bool running = true;
 
-        Scenes sceneType = Scenes.MMark;
+        IScene scene;
         if (args.Length > 0)
         {
-            Enum.TryParse<Scenes>(args[0], true, out sceneType);
-        }
+            var availableScenes = GetAvailableScenes();
+            var sceneName = args[0].Trim('\'', '"');
 
-        IScene scene = sceneType switch
+            var selectedScene = availableScenes.FirstOrDefault(s =>
+                s.Name.Equals(sceneName, StringComparison.OrdinalIgnoreCase));
+
+            if (selectedScene == null)
+            {
+                Console.WriteLine($"Scene '{args[0]}' not found. Available scenes:");
+                foreach (var s in availableScenes)
+                {
+                    Console.WriteLine($"  - {s.Name}");
+                    Console.ReadKey();
+                }
+                scene = SelectScene();
+            }
+            else
+            {
+                scene = selectedScene;
+            }
+        }
+        else
         {
-            Scenes.MMark => new MMarkScene(),
-            Scenes.Paragraph => new ParagraphScene(),
-            Scenes.CirclingSquares => new CirclingSquares(),
-            _ => new MMarkScene()
-        };
+            scene = SelectScene();
+        }
 
         var st = Stopwatch.StartNew();
         var frames = 0;
