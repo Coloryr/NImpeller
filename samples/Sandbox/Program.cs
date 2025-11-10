@@ -144,7 +144,6 @@ static unsafe  class Program
         
         bool running = true;
 
-        // Parse first argument with Enum.TryParse
         Scenes sceneType = Scenes.MMark;
         if (args.Length > 0)
         {
